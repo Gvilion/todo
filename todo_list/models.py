@@ -10,4 +10,4 @@ class Task(models.Model):
 
 
 class Tag(models.Model):
-    name = models.fields.CharField()
+    name = models.fields.CharField(max_length=255)
