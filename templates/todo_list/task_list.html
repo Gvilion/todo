@@ -10,37 +10,41 @@
   </h1>
 
   {% if task_list %}
-    <ul>
-      {% for task in task_list %}
-        <li>
-          <strong>
-            {{ task.content }}
-            {% if task.done %}
-              <p style="color: green"> Done</p>
-              <form method="post" action="{% url 'todo_list:toggle-done' task.pk %}">
-                {% csrf_token %}
-                <button class="btn btn-primary link-to-page" type="submit">Completed</button>
-              </form>
-            {% else %}
-              <p style="color: red">Undone</p>
-              <form method="post" action="{% url 'todo_list:toggle-done' task.pk %}">
-                {% csrf_token %}
-                <button class="btn btn-secondary link-to-page" type="submit">undo</button>
-              </form>
-            {% endif %}
-          </strong>
-          <p>
-            Created: {{ task.datetime }}.
-            <span style="color: firebrick">Deadline: {{ task.deadline }}</span>
-          </p>
-          <p class="text-muted">
-            Tags: {% for tag in task.tags.all %}{{ tag.name }}{% endfor %}
-            <a href="{% url 'todo_list:task-update' pk=task.id %}">Update</a>
-            <a href="{% url 'todo_list:task-delete' pk=task.id %}">Delete</a>
-          </p>
-        </li>
-      {% endfor %}
-    </ul>
+    <diw class="container">
+      <div class="row">
+        {% for task in task_list %}
+          <div class="col-3 m-5 border border-primary" style="border-radius: 1rem">
+            <div class="m-5">
+              <strong>
+                {{ task.content }}
+                {% if task.done %}
+                  <p style="color: green"> Done</p>
+                  <form method="post" action="{% url 'todo_list:toggle-done' task.pk %}">
+                    {% csrf_token %}
+                    <button class="btn btn-success link-to-page" type="submit">Completed</button>
+                  </form>
+                {% else %}
+                  <p style="color: red">Undone</p>
+                  <form method="post" action="{% url 'todo_list:toggle-done' task.pk %}">
+                    {% csrf_token %}
+                    <button class="btn btn-secondary link-to-page" type="submit">undo</button>
+                  </form>
+                {% endif %}
+              </strong>
+              <p>
+                Created: {{ task.datetime }}.
+                <span style="color: firebrick">Deadline: {{ task.deadline }}</span>
+              </p>
+              <p class="text-muted">
+                Tags: {% for tag in task.tags.all %}{{ tag.name }}{% endfor %}
+                <a href="{% url 'todo_list:task-update' pk=task.id %}">Update</a>
+                <a href="{% url 'todo_list:task-delete' pk=task.id %}">Delete</a>
+              </p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </diw>
   {% else %}
     <p>There are no tasks found</p>
   {% endif %}
