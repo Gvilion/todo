@@ -11,4 +11,14 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ["content", "deadline"]
+        fields = ["content", "tags", "deadline"]
+        widgets = {
+            "deadline": forms.DateTimeInput(
+                format="%Y-%m-%dT%H:%M",
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Select a date",
+                    "type": "datetime-local"
+                }
+            ),
+        }
