@@ -17,6 +17,16 @@
             {{ task.content }}
             {% if task.done %}
               <p style="color: green"> Done</p>
+              <form method="post" action="{% url 'todo_list:toggle-done' task.pk %}">
+                {% csrf_token %}
+                <button class="btn btn-primary link-to-page" type="submit">Completed</button>
+              </form>
+            {% else %}
+              <p style="color: red">Undone</p>
+              <form method="post" action="{% url 'todo_list:toggle-done' task.pk %}">
+                {% csrf_token %}
+                <button class="btn btn-secondary link-to-page" type="submit">undo</button>
+              </form>
             {% endif %}
           </strong>
           <p>
@@ -24,7 +34,7 @@
             <span style="color: firebrick">Deadline: {{ task.deadline }}</span>
           </p>
           <p class="text-muted">
-            Tags: {% for tag in task.tags %}{{ tag.name }}{% endfor %}
+            Tags: {% for tag in task.tags.all %}{{ tag.name }}{% endfor %}
             <a href="{% url 'todo_list:task-update' pk=task.id %}">Update</a>
             <a href="{% url 'todo_list:task-delete' pk=task.id %}">Delete</a>
           </p>
